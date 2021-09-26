@@ -36,3 +36,4 @@ void showcontact(const struct contact* con);
 void deletecontact(struct contact* con);
 void searchcontact(const struct contact* con);
 void modifycontact(struct contact* con);
+void sortcontact(struct contact* con);

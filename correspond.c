@@ -134,3 +134,22 @@ void modifycontact(struct contact* con)
 		printf("添加成功！\n");
 	}
 }
+
+void sortcontact(struct contact* con)
+{
+	int i, j;
+	for (i = 0; i < con->size; i++)
+	{
+		for (j = con->size-1; j > i; j--)
+		{
+			if (strcmp(con->data[i].name, con->data[j].name) > 0)
+			{
+				struct peoInfo temp;
+				temp = con->data[i];
+				con->data[i] = con->data[j];
+				con->data[j] = temp;
+			}
+		}
+	}
+	printf("排序成功！\n");
+}

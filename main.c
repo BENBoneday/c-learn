@@ -38,6 +38,7 @@ int main()
 			showcontact(&con);
 			break;
 		case sort:
+			sortcontact(&con);
 			break;
 		}
 	} while (input);
