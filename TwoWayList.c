@@ -20,6 +20,53 @@ Node* ListInit()
 	phead->prev = phead;
 	return phead;
 }
+Node* ListFind(Node* phead,LTDataType x)
+{
+	assert(phead);
+	Node* cur = phead->next;
+	while (cur != phead)
+	{
+		if (cur->val == x)
+		{
+			return cur;
+		}
+		cur = cur->next;
+	}
+	return NULL;
+}
+void ListInsert(Node* phead,LTDataType x,LTDataType data)
+{
+	assert(phead);
+	Node* cur = ListFind(phead,x);
+	if (cur == NULL)
+	{
+		exit(-1);
+	}
+	Node* front = cur->prev;
+
+	Node* newNode = CreatNewNode(data);
+	front->next = newNode;
+	newNode->prev = front;
+
+	newNode->next = cur;
+	cur->prev = newNode;
+}
+void ListErase(Node* phead,LTDataType x)
+{
+	Node* cur = ListFind(phead, x);
+	if (cur == NULL)
+	{
+		exit(-1);
+	}
+	Node* front = cur->prev;
+	Node* frontfront = front->prev;
+
+	frontfront->next = cur;
+	cur->prev = frontfront;
+
+	free(front);
+	front = NULL;
+}
 void ListPushBack(Node* phead, LTDataType x)
 {
 	Node* newNode =CreatNewNode(x);
@@ -39,6 +86,31 @@ void ListPopBack(Node* phead)
 	free(tail);
 	tail = NULL;
 }
+void ListPushFront(Node* phead,LTDataType x)
+{
+	Node* newNode = CreatNewNode(x);
+	Node* front = phead->next;
+
+	phead->next = newNode;
+	newNode->prev = phead;
+
+	newNode->next = front;
+	front->prev = newNode;
+}
+void ListPopFront(Node* phead)
+{
+	assert(phead);
+	assert(phead->next!=phead);
+	Node* first = phead->next;
+	Node* second = first->next;
+
+	phead->next = second;
+	second->prev = phead;
+
+	free(first);
+	first = NULL;
+}
+
 void ListPrint(Node* phead)
 {
 	assert(phead);
