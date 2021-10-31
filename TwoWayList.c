@@ -69,12 +69,13 @@ void ListErase(Node* phead,LTDataType x)
 }
 void ListPushBack(Node* phead, LTDataType x)
 {
-	Node* newNode =CreatNewNode(x);
+	/*Node* newNode =CreatNewNode(x);
 	Node* tail = phead->prev;
 	tail->next = newNode;
 	newNode->prev = tail;
 	phead->prev = newNode;
-	newNode->next = phead;
+	newNode->next = phead;*/
+	ListInsert(phead, x, x);
 }
 void ListPopBack(Node* phead)
 {
@@ -110,7 +111,27 @@ void ListPopFront(Node* phead)
 	free(first);
 	first = NULL;
 }
-
+void ListDestroy(Node** phead)
+{
+	assert(*phead);
+	ListClear(*phead);
+	free(*phead);
+	*phead = NULL;
+}
+void ListClear(Node* phead)
+{
+	assert(phead);
+	Node* cur = phead->next;
+	while (cur != phead)
+	{
+		Node* next = cur->next;
+		free(cur);
+		cur = next;
+		next = next->next;
+	}
+	phead->next = phead;
+	phead->prev = phead;
+}
 void ListPrint(Node* phead)
 {
 	assert(phead);

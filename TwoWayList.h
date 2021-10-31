@@ -23,3 +23,5 @@ void ListPopFront(Node* phead);
 Node* ListFind(Node* phead, LTDataType x);
 void ListInsert(Node* phead, LTDataType x, LTDataType data);
 void ListErase(Node* phead, LTDataType x);
+void ListDestroy(Node** phead);
+void ListClear(Node* phead);
