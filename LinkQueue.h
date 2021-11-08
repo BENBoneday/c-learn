@@ -4,10 +4,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+typedef int DATATYPE;
 typedef struct QueueNode
 {
 	struct QueueNode* next;
-	void* data;
+	DATATYPE data;
 }Node;
 typedef struct LinkQueue
 {
@@ -18,7 +19,7 @@ typedef struct LinkQueue
 //初始化
 Node* InitQueue();
 //入队
-void PushQueue( Queue* queue,void* data);
+void PushQueue( Queue* queue, DATATYPE data);
 //返回队头元素
 Node* FrontQueue( Queue* queue);
 //出队

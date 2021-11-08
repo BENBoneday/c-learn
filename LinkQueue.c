@@ -6,24 +6,27 @@ Node* InitQueue() {
 	Node* node = (Node*)malloc(sizeof(Node));
 	queue->head = node;
 	queue->tail = node;
-	queue->head->next = node;
-	queue->size = 0;
+	node->data = 0;
+	
+	queue->size = 1;
 	
 	return queue;
 }
 //入队
-void PushQueue( Queue* queue, void* data) {
+void PushQueue( Queue* queue, DATATYPE data) {
 	if (queue == NULL)
 	{
 		return;
 	}
 	Node* node = (Node*)malloc(sizeof(Node));
-	Node* cur = queue->head;
-	node->data = data;
+	Node* cur = queue->tail;
+	
 	cur->next= node;
-	node->next = cur;
+	//node->next = cur;
 	cur = node;
-	queue->tail = node;
+	cur->data = data;
+	cur->next = NULL;
+	queue->tail = cur;
 	queue->size++;
 }
 //返回队头元素
@@ -42,9 +45,9 @@ void PopQueue( Queue* queue) {
 	}
 	Node* newTop = queue->head->next;
 	free(queue->head);
-	queue->head == NULL;
+	queue->head = NULL;
 	queue->head = newTop;
-	queue->tail->next = newTop;
+	
 	queue->size--;
 }
 //返回队尾元素
@@ -77,7 +80,7 @@ void ClearQueue( Queue* queue) {
 		return;
 	}
 	Node* cur = queue->head->next;
-	while (cur->next!=queue->head)
+	while (cur)
 	{
 		Node* next = cur->next;
 		free(cur);
