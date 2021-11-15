@@ -6,6 +6,62 @@ typedef struct BINARYNODE
 	struct BINARYNODE* lChild;
 	struct BINARYNODE* rChild;
 }BinaryNode;
+
+//叶子结点数目
+int* CalculateLeafNum(BinaryNode* root,int* leafNum)
+{
+	if (root == NULL)
+	{
+		return 0;
+	}
+	if (root->lChild == NULL && root->rChild == NULL)
+	{
+		(*leafNum)++;
+	}
+	CalculateLeafNum(root->lChild, leafNum);
+	CalculateLeafNum(root->rChild, leafNum);
+	return leafNum;
+}
+//树的高度
+int CalculateTreeDepth(BinaryNode* root)
+{
+	
+	if (root == NULL)
+	{
+		return 0;
+	}
+	int depth = 0;
+	int leftDepth = CalculateTreeDepth(root->lChild);
+	int rightDepth = CalculateTreeDepth(root->rChild);
+
+	return leftDepth>rightDepth?leftDepth+1:rightDepth+1;
+}
+//拷贝二叉树
+BinaryNode* CopyBinaryTree(BinaryNode* root)
+{
+	if (root == NULL)
+	{
+		return NULL;
+	}
+	BinaryNode* lChild=CopyBinaryTree(root->lChild);
+	BinaryNode* rChild=CopyBinaryTree(root->rChild);
+	BinaryNode* newNode = (BinaryNode*)malloc(sizeof(BinaryNode));
+	newNode->ch = root->ch;
+	newNode->lChild = lChild;
+	newNode->rChild = rChild;
+	return newNode;
+}
+//释放树
+void FreeSpaceBinaryTree(BinaryNode* root)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+	FreeSpaceBinaryTree(root->lChild);
+	FreeSpaceBinaryTree(root->rChild);
+	free(root);
+}
 //先序
 void Recursion(BinaryNode* root)
 {
@@ -61,11 +117,15 @@ void CreateBinaryTree()
 	node6.rChild = &node7;
 	node7.lChild = &node8;
 
-	Recursion(&node1);
-	printf("\n");
-	Recursion1(&node1);
-	printf("\n");
-	Recursion2(&node1);
+	int leafNum = 0;
+	//CalculateLeafNum(&node1, &leafNum);
+
+	
+	//int D=CalculateTreeDepth(&node1);
+	//printf("%d\n", D);
+	BinaryNode* root=CopyBinaryTree(&node1);
+	Recursion(root);
+	free(root);
 }
 int main()
 {
